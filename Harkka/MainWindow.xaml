@@ -1,0 +1,36 @@
+﻿<Window x:Class="KilsatMassiks.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Main Window" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="29.96"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Buttons to add new tabs -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5,5,5,5">
+            <Button Content="Add Tab" Click="AddTab_Click"/>
+        </StackPanel>
+
+        <!-- Tab control to manage multiple windows -->
+        <TabControl x:Name="tabControl" Grid.Row="1" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Header}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding Content}"/>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+
+        <!-- Embedded window -->
+        <ContentControl Grid.Row="1" Margin="5,10,5,5" Content="{Binding SelectedTab.Content}"/>
+    </Grid>
+</Window>
+
+
