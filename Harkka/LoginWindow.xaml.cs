@@ -19,16 +19,24 @@ namespace KilsatMassiks
     /// </summary>
     public partial class LoginWindow : Window
     {
-        Window windowsignup = new SignUpWindow();
+        public static LoginWindow Instance { get; private set; }
+
         public LoginWindow()
         {
             InitializeComponent();
+            Instance = this;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Window windowsignup = new SignUpWindow();
             this.Hide();
             windowsignup.Show();
+        }
+
+        private void CloseUp(object sender, System.ComponentModel.CancelEventArgs e) 
+        { 
+            MainWindow.Instance.Show();
         }
     }
 }

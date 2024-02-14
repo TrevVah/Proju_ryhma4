@@ -23,5 +23,9 @@ namespace KilsatMassiks
         {
             InitializeComponent();
         }
+        private void CloseUp(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            LoginWindow.Instance.Show();
+        }
     }
 }

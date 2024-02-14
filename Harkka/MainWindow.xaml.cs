@@ -10,7 +10,7 @@ namespace KilsatMassiks
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        Window windowlogin = new LoginWindow();
+        public static MainWindow Instance { get; private set; }
 
         private ObservableCollection<TabItem> _tabs;
         public ObservableCollection<TabItem> Tabs
@@ -40,6 +40,7 @@ namespace KilsatMassiks
             DataContext = this;
             Tabs = new ObservableCollection<TabItem>();
             Check_User_Login();
+            Instance = this;
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -58,6 +59,7 @@ namespace KilsatMassiks
         {
             if (0 == 0);
             {
+                Window windowlogin = new LoginWindow();
                 this.Hide();
                 windowlogin.Show();
             }
