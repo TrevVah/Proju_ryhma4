@@ -47,7 +47,7 @@ namespace KilsatMassiks
         {
             var newTab = new TabItem();
             newTab.Header = $"Tab {Tabs.Count + 1}";
-            newTab.Content = new TabContent();
+            newTab.Content = new calendar();
             Tabs.Add(newTab);
         }
 
