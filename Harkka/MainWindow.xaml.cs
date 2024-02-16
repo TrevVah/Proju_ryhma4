@@ -52,7 +52,7 @@ namespace KilsatMassiks
         {
             var newTab = new TabItem();
             newTab.Header = $"Tab {Tabs.Count + 1}";
-            newTab.Content = new TabContent();
+            newTab.Content = new Raportti();
             Tabs.Add(newTab);
         }
         private void Check_User_Login()
