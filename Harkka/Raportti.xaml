@@ -27,6 +27,6 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <Button Content="lisaa" Click="AddRecordButton_Click" Margin="400,195,0,177" HorizontalAlignment="Left" Width="134"/>
+        <Button Content="lisaa" Click="AddRecordButton_Click" Margin="10,197,0,175" HorizontalAlignment="Left" Width="134" RenderTransformOrigin="0.525,0.532"/>
     </Grid>
 </UserControl>

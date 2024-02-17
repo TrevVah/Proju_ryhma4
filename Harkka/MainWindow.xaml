@@ -10,7 +10,8 @@
 
         <!-- Buttons to add new tabs -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5,5,5,5">
-            <Button Content="Add Tab" Click="AddTab_Click"/>
+            <Button Content="Kalenteri" Click="AddTab_Click1"/>
+            <Button Content="Raportti" Click="AddTab_Click"/>
         </StackPanel>
 
         <!-- Tab control to manage multiple windows -->

@@ -55,6 +55,13 @@ namespace KilsatMassiks
             newTab.Content = new Raportti();
             Tabs.Add(newTab);
         }
+        private void AddTab_Click1(object sender, RoutedEventArgs e)
+        {
+            var newTab = new TabItem();
+            newTab.Header = $"Tab {Tabs.Count + 1}";
+            newTab.Content = new Calendar();
+            Tabs.Add(newTab);
+        }
         private void Check_User_Login()
         {
             if (0 == 0);
