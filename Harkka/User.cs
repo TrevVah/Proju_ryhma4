@@ -11,26 +11,31 @@ namespace KilsatMassiks
 {
     internal class User
     {
-        int _userID { get; set; }
-        string _first_name { get; set; }
-        string _last_name { get; set; }
-        string _email { get; set; }
-        string _password { get; set; }
+        public int userID { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string email { get; set; }
+        //string _password { get; set; }
         //byte[] _salt { get; set; }
 
-        public User(int userID, string first_name, string last_name, string email, string password)
+        public User(int userID, string first_name, string last_name, string email)
         {
-            this._userID = userID;
-            this._first_name = first_name;
-            this._last_name = last_name;
-            this._email = email;
-            this._password = password;
+            this.userID = userID;
+            this.first_name = first_name;
+            this.last_name = last_name;
+            this.email = email;
+            //this._password = password;
             //this._salt = salt;
         }
 
         public int getID()
         {
-            return _userID;
+            return userID;
+        }
+
+        public string getEmail()
+        { 
+            return email; 
         }
     }
 }

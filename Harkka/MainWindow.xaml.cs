@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,6 +49,7 @@ namespace KilsatMassiks
             Instance = this;
 
             CloseTabCommand = new RelayCommand(TabCloseCommandExecute);
+
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -77,10 +79,19 @@ namespace KilsatMassiks
             if (users.Count > 0)
             {
                 users[0].UpdateTrip(DateTime.Now, 100, 0);
+
+                Action<string?> TryAddUser = result =>
+                {
+                    if (result != null)
+                    {
+                        Debug.WriteLine(result);
+                    }
+                };
+                TryAddUser(users[0].AddUser("Ville", "Viipuri", "ville.moto@gmail.com", "kissa123"));
             }
             else
             {
-                User dump = new User(1, "Matti", "Meikäläinen", "matti.meikalinen@google.gov", "kissa123");
+                User dump = new User(1, "Matti", "Meikäläinen", "matti.meikalinen@google.gov");
                 users.Add(new UserDataHandler(dump));
             }
 
