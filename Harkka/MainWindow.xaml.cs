@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 
 namespace KilsatMassiks
@@ -11,6 +14,8 @@ namespace KilsatMassiks
         private List<UserDataHandler> users = new List<UserDataHandler>();
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand CloseTabCommand { get; }
+        public static MainWindow Instance { get; private set; }
 
         private ObservableCollection<TabItem> _tabs;
         public ObservableCollection<TabItem> Tabs
@@ -39,8 +44,10 @@ namespace KilsatMassiks
             InitializeComponent();
             DataContext = this;
             Tabs = new ObservableCollection<TabItem>();
+            Check_User_Login();
+            Instance = this;
 
-
+            CloseTabCommand = new RelayCommand(TabCloseCommandExecute);
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -50,10 +57,19 @@ namespace KilsatMassiks
 
         private void AddTab_Click(object sender, RoutedEventArgs e)
         {
-            var newTab = new TabItem();
-            newTab.Header = $"Tab {Tabs.Count + 1}";
-            newTab.Content = new TabContent();
+            var newTab = CreateNewTabItem($"Tab {Tabs.Count + 1}", new TabContent());
             Tabs.Add(newTab);
+            SelectedTab = newTab;
+        }
+
+        private void Check_User_Login()
+        {
+            if (0 == 0) ;
+            {
+                Window windowlogin = new LoginWindow();
+                this.Hide();
+                windowlogin.Show();
+            }
         }
 
         private void DoSomething(object sender, RoutedEventArgs e)
@@ -62,12 +78,73 @@ namespace KilsatMassiks
             {
                 users[0].UpdateTrip(DateTime.Now, 100, 0);
             }
-            else 
+            else
             {
                 User dump = new User(1, "Matti", "Meikäläinen", "matti.meikalinen@google.gov", "kissa123");
                 users.Add(new UserDataHandler(dump));
             }
 
         }
+
+        private void OpenReportTab(object sender, RoutedEventArgs e)
+        {
+            var newTab = CreateNewTabItem($"Tab {Tabs.Count + 1}", new Raportti());
+            Tabs.Add(newTab);
+            SelectedTab = newTab;
+        }
+
+        private void CloseTab_Click(object sender, RoutedEventArgs e)
+        {
+            Button closeButton = sender as Button;
+            TabItem tabItem = closeButton.Tag as TabItem;
+
+            if (tabItem != null)
+            {
+                Tabs.Remove(tabItem);
+            }
+        }
+
+        private void TabCloseCommandExecute(object parameter)
+        {
+            TabItem tabItem = parameter as TabItem;
+
+            if (tabItem != null)
+            {
+                Tabs.Remove(tabItem);
+            }
+        }
+
+        private TabItem CreateNewTabItem(string header, object content)
+        {
+            var newTab = new TabItem();
+            newTab.Header = header;
+
+            // Create a StackPanel to hold the header content and the close button
+            var headerPanel = new StackPanel();
+            headerPanel.Orientation = Orientation.Horizontal;
+
+            var headerTextBlock = new TextBlock();
+            headerTextBlock.Text = header;
+
+            var image = new Image();
+            image.Source = new BitmapImage(new Uri(Path.Combine(Directory.GetCurrentDirectory(), "x.png"))); // Set the image source
+            image.Width = 10;
+            image.Height = 10;
+            image.Margin = new Thickness(5, 0, 0, 0);
+            image.Cursor = Cursors.Hand; // Set cursor to indicate it's clickable
+
+            // Handle click event
+            image.MouseLeftButtonUp += (sender, e) => Tabs.Remove(newTab);
+
+            headerPanel.Children.Add(headerTextBlock);
+            headerPanel.Children.Add(image);
+
+            newTab.Header = headerPanel;
+            newTab.Content = content;
+
+            return newTab;
+        }
     }
+
+
 }
