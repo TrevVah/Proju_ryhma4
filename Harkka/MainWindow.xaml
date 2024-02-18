@@ -11,6 +11,7 @@
         <!-- Buttons to add new tabs -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5,5,5,5">
             <Button Content="Add Tab" Click="AddTab_Click"/>
+            <Button x:Name="TestiNappula" Content="Button" Click="DoSomething"/>
         </StackPanel>
 
         <!-- Tab control to manage multiple windows -->
