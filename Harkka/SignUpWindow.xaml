@@ -8,6 +8,17 @@
         Title="SignUpWindow" Height="450" Width="800"
         Closing="CloseUp">
     <Grid>
-        
+        <TextBlock HorizontalAlignment="Left" Margin="206,80,0,0" TextWrapping="Wrap" Text="Etunimi" VerticalAlignment="Top" Width="109"/>
+        <TextBox x:Name="first_name_field" HorizontalAlignment="Left" Margin="206,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" TextChanged="TextBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="206,128,0,0" TextWrapping="Wrap" Text="Sukunimi" VerticalAlignment="Top" Width="109"/>
+        <TextBox x:Name="last_name_field" HorizontalAlignment="Left" Margin="206,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" TextChanged="TextBox_TextChanged_1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="206,176,0,0" TextWrapping="Wrap" Text="Sähköposti" VerticalAlignment="Top" Width="109"/>
+        <TextBox x:Name="email_field" HorizontalAlignment="Left" Margin="206,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" TextChanged="TextBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="206,224,0,0" TextWrapping="Wrap" Text="Salasana" VerticalAlignment="Top" Width="109"/>
+        <Button Content="Luo käyttäjä" HorizontalAlignment="Left" Margin="206,353,0,0" VerticalAlignment="Top" Height="30" Width="109" Click="SignUp_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="206,272,0,0" TextWrapping="Wrap" Text="Salasana uudelleen" VerticalAlignment="Top" Width="109"/>
+        <PasswordBox x:Name="password_field1" HorizontalAlignment="Left" Margin="206,245,0,0" VerticalAlignment="Top" Width="287"/>
+        <PasswordBox x:Name="password_field2" HorizontalAlignment="Left" Margin="206,293,0,0" VerticalAlignment="Top" Width="287"/>
+
     </Grid>
 </Window>

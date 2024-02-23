@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KilsatMassiks
 {
-    internal class Trip
+    public class Trip
     {
         public DateTime? date_time {  get; set; }
         public int? km {  get; set; }

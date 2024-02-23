@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace KilsatMassiks
 {
-    internal class UserDataHandler
+    public class UserDataHandler
     {
-        User currentUser {  get; set; }
+        public User currentUser {  get; set; }
 
 
         public UserDataHandler(User currentUser) 
@@ -103,72 +103,6 @@ namespace KilsatMassiks
                 }
             }
             return false;
-        }
-
-        public string? AddUser(string _first_name, string _last_name, string _email, string _password)
-        {
-            Debug.WriteLine("Finding user database...");
-
-            string jsonUserFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Users.json");
-            string jsonPasswordFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Passwords.json");
-
-            if (!File.Exists(jsonUserFilePath))
-            {
-                File.Create(jsonUserFilePath).Close();
-                string jsonInitContent = "[\n]";
-                File.WriteAllText(jsonUserFilePath, jsonInitContent);
-                Debug.WriteLine("Users.json was not found and was created.");
-            }
-
-            if (!File.Exists(jsonPasswordFilePath))
-            {
-                File.Create(jsonPasswordFilePath).Close();
-                string jsonInitContent = "[\n]";
-                File.WriteAllText(jsonPasswordFilePath, jsonInitContent);
-                Debug.WriteLine("Passwords.json was not found and was created.");
-            }
-
-            Debug.WriteLine("Adding an user...");
-            {
-                string jsonUsersString = File.ReadAllText(jsonUserFilePath);
-                string jsonPasswordsString = File.ReadAllText(jsonPasswordFilePath);
-                List<User> users = JsonSerializer.Deserialize<List<User>>(jsonUsersString);
-                List<Password> passwords = JsonSerializer.Deserialize<List<Password>>(jsonPasswordsString);
-                foreach (User user in users)
-                {
-                    if (user.getEmail() == _email)
-                    {
-                        return "User with that email already exist.";
-                    }
-                }
-
-                User newUser = new User(users.Count+1, _first_name, _last_name, _email);
-                users.Add(newUser);
-
-                jsonUsersString = JsonSerializer.Serialize(users);
-                jsonUsersString = jsonUsersString.Replace("},{", "},\n{");
-                jsonUsersString = jsonUsersString.Replace("[", "[\n");
-                jsonUsersString = jsonUsersString.Replace("]", "\n]");
-
-                byte[] _salt = Hasher.GenerateSalt();
-                byte[] _hashedPassword = Hasher.ComputeHash(_password, _salt);
-
-                Password newPassword = new Password(users.Count, _hashedPassword, _salt);
-                Debug.WriteLine(JsonSerializer.Serialize(newPassword));
-                passwords.Add(newPassword);
-
-                jsonPasswordsString = JsonSerializer.Serialize(passwords);
-                jsonPasswordsString = jsonPasswordsString.Replace("},{", "},\n{");
-                jsonPasswordsString = jsonPasswordsString.Replace("[", "[\n");
-                jsonPasswordsString = jsonPasswordsString.Replace("]", "\n]");
-
-
-                File.WriteAllText(jsonUserFilePath, jsonUsersString);
-                File.WriteAllText(jsonPasswordFilePath, jsonPasswordsString);
-                Debug.WriteLine("User added.");
-            }
-
-            return null;
         }
 
         public Trip? GetDailyTrip(DateTime date)

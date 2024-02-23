@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-
 namespace KilsatMassiks
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
@@ -66,7 +65,7 @@ namespace KilsatMassiks
 
         private void Check_User_Login()
         {
-            if (0 == 0) ;
+            if (users.Count == 0)
             {
                 Window windowlogin = new LoginWindow();
                 this.Hide();
@@ -79,22 +78,17 @@ namespace KilsatMassiks
             if (users.Count > 0)
             {
                 users[0].UpdateTrip(DateTime.Now, 100, 0);
-
-                Action<string?> TryAddUser = result =>
-                {
-                    if (result != null)
-                    {
-                        Debug.WriteLine(result);
-                    }
-                };
-                TryAddUser(users[0].AddUser("Ville", "Viipuri", "ville.moto@gmail.com", "kissa123"));
             }
             else
             {
-                User dump = new User(1, "Matti", "Meikäläinen", "matti.meikalinen@google.gov");
-                users.Add(new UserDataHandler(dump));
             }
 
+        }
+
+        public void SwarmApp(User _user)
+        {
+            users.Add(new UserDataHandler(_user));
+            this.Show();
         }
 
         private void OpenReportTab(object sender, RoutedEventArgs e)
@@ -154,6 +148,11 @@ namespace KilsatMassiks
             newTab.Content = content;
 
             return newTab;
+        }
+
+        public UserDataHandler GetHandler()
+        {
+            return users[0];
         }
     }
 

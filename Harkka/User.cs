@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace KilsatMassiks
 {
-    internal class User
+    public class User
     {
         public int userID { get; set; }
         public string first_name { get; set; }
