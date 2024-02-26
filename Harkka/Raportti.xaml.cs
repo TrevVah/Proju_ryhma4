@@ -22,7 +22,6 @@ namespace KilsatMassiks
     public partial class Raportti : UserControl
     {
         public ObservableCollection<ajoTapahtuma> tapahtuma { get; set; }
-
         //MainWindowissa luodun UserDataHandler classi, joka omistaa kirjautuneen käyttäjän currentUser muuttujassa.
         private UserDataHandler handler = MainWindow.Instance.GetHandler();
         public Raportti()
@@ -33,6 +32,7 @@ namespace KilsatMassiks
             // kusiset tapahtumat
             tapahtuma.Add(new ajoTapahtuma { Date = DateTime.Today.AddDays(-1), kmDriven = 50, korvausMaara = 25.00, henkilo = "faijas perse" });
             tapahtuma.Add(new ajoTapahtuma { Date = DateTime.Today.AddDays(-2), kmDriven = 40, korvausMaara = 20.00, henkilo = "Rock Ari" });
+
 
             //KORVAA DateTime.Now/*startDate*/ .xaml datepicker ajansyötöllä
             //KORVAA DateTime.Now/*endDate*/ .xaml datepicker ajansyötöllä
@@ -47,7 +47,6 @@ namespace KilsatMassiks
                     tapahtuma.Add(new ajoTapahtuma { Date = currentDate, kmDriven = trip.km, korvausMaara = 20.00, henkilo = name });
                 }
             }
-
 
 
             mileageDataGrid.ItemsSource = tapahtuma;
