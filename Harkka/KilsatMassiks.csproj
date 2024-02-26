@@ -8,4 +8,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Trips\" />
+  </ItemGroup>
+
 </Project>
