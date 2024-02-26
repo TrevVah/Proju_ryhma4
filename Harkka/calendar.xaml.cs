@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,8 +24,8 @@ namespace KilsatMassiks
     /// </summary>
     public partial class calendar : UserControl
     {
-
         private const string FilePath = "C:\\Users\\Trevor\\Desktop\\Laukku\\Proju_ryhma4-trevorin_oksa\\Proju_ryhma4-trevorin_oksa\\Harkka\\data.json";
+
         public calendar()
         {
             InitializeComponent();
