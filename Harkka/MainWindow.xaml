@@ -1,7 +1,7 @@
 ﻿<Window x:Class="KilsatMassiks.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Main Window" Height="450" Width="800">
+        Title="Main Window" Height="600" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="29.96"/>
@@ -10,9 +10,9 @@
 
         <!-- Buttons to add new tabs -->
         <StackPanel Orientation="Vertical" Grid.Row="1" Margin="5,10,0,10" HorizontalAlignment="Left" Width="95">
-            <Button Content="New Empty" Click="AddTab_Click" Height="30"/>
-            <Button x:Name="TestiNappula" Content="Button" Click="DoSomething" Height="30"/>
-            <Button x:Name="RaporttiNappula" Content="New Rerport" Click="OpenReportTab" Height="30"/>
+            <Button Content="Tyhjä" Click="AddTab_Click" Height="30"/>
+            <Button x:Name="TestiNappula" Content="Lisää matka" Click="OpenCalendarTab" Height="30"/>
+            <Button x:Name="RaporttiNappula" Content="Luo raportti" Click="OpenReportTab" Height="30"/>
         </StackPanel>
 
         <!-- Tab control to manage multiple windows -->

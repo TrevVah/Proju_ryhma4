@@ -19,7 +19,7 @@ namespace KilsatMassiks
             this.currentUser = currentUser; 
         }
 
-        public void UpdateTrip(DateTime date, int km, int status) 
+        public void UpdateTrip(DateTime date, int km, float duration, string info, int status) 
         {
             Debug.WriteLine("Updating a trip...");
 
@@ -54,18 +54,28 @@ namespace KilsatMassiks
 
                     Debug.WriteLine("JSON file initialized.");
                 }
-            //A trip update
+            //A trip update to database
             Debug.WriteLine("Updating a trip to: " + jsonFilePath);
                 {
-                    string[] tripsAsJSON = File.ReadAllLines(jsonFilePath);
-                    Debug.WriteLine(tripsAsJSON[date.Day]);
-                    Trip trip = JsonSerializer.Deserialize<Trip>(tripsAsJSON[date.Day].TrimEnd(','));
-                    trip.date_time = date;
-                    trip.km = km;
-                    trip.status = status;
-                    string updatedTripJSON = JsonSerializer.Serialize(trip);
-                    tripsAsJSON[date.Day] = updatedTripJSON + ",";
-                    File.WriteAllLines(jsonFilePath, tripsAsJSON);
+                    //JSON containing Month's trips for each day into List
+                    List<Trip> monthTrips = new List<Trip>();
+                    string jsonContent = File.ReadAllText(jsonFilePath);
+                    monthTrips = JsonSerializer.Deserialize<List<Trip>>(jsonContent);
+                    //Update content
+                    monthTrips[date.Day - 1].date_time = date;
+                    monthTrips[date.Day - 1].km = km;
+                    monthTrips[date.Day - 1].status = status;
+                    monthTrips[date.Day - 1].info = info;
+                    monthTrips[date.Day - 1].duration = duration;
+                    //Updated List serialized back to JSON file
+                    string jsonString = JsonSerializer.Serialize(monthTrips);
+                    jsonString = jsonString.Replace("},{", "},\n{");
+                    jsonString = jsonString.Replace("[", "[\n");
+                    jsonString = jsonString.Replace("]", "\n]");
+
+                    File.WriteAllText(jsonFilePath, jsonString);
+
+                    Debug.WriteLine("JSON file updated.");
                 }
 
         }
@@ -95,7 +105,7 @@ namespace KilsatMassiks
                         jsonString = JsonSerializer.Serialize(users);
                         jsonString = jsonString.Replace("},{", "},\n{");
                         jsonString = jsonString.Replace("[", "[\n");
-                        jsonString = jsonString.Replace("]", "\n]");
+                        jsonString = jsonString.Replace(",]", "\n]");
                         File.WriteAllText(jsonFilePath, jsonString);
                         Debug.WriteLine("User updated.");
                         return true;

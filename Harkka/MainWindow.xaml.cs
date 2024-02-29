@@ -73,15 +73,11 @@ namespace KilsatMassiks
             }
         }
 
-        private void DoSomething(object sender, RoutedEventArgs e)
+        private void OpenCalendarTab(object sender, RoutedEventArgs e)
         {
-            if (users.Count > 0)
-            {
-                users[0].UpdateTrip(DateTime.Now, 100, 0);
-            }
-            else
-            {
-            }
+            var newTab = CreateNewTabItem($"Tab {Tabs.Count + 1}", new calendar());
+            Tabs.Add(newTab);
+            SelectedTab = newTab;
 
         }
 

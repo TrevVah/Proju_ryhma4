@@ -26,6 +26,8 @@ namespace KilsatMassiks
     {
         private const string FilePath = "C:\\Users\\Trevor\\Desktop\\Laukku\\Proju_ryhma4-trevorin_oksa\\Proju_ryhma4-trevorin_oksa\\Harkka\\data.json";
 
+        private UserDataHandler handler = MainWindow.Instance.GetHandler();
+
         public calendar()
         {
             InitializeComponent();
@@ -33,70 +35,40 @@ namespace KilsatMassiks
 
         private void SyotaButtonClick(object sender, RoutedEventArgs e)
         {
-
-
-            string kilometrit = KilometritTextBox.Text;
-            string matkaAika = MatkaAikaTextBox.Text;
+            int kilometrit = 0;
+            float matkaAika = 0;
             string osoiteTiedot = OsoiteTiedotTextBox.Text;
+            try
+            {
+                 kilometrit = Int32.Parse(KilometritTextBox.Text);
+                 matkaAika = ParseFloat(MatkaAikaTextBox.Text);
+            }
+            catch (FormatException)
+            { 
+                Console.WriteLine($"Unable to parse '{KilometritTextBox.Text}'"); 
+            }
+
             DateTime selectedDate = PVMDatePicker.SelectedDate ?? DateTime.Now;
 
 
-            var newData = new
-            {
-                Kilometrit = kilometrit,
-                MatkaAika = matkaAika,
-                OsoiteTiedot = osoiteTiedot,
-                PVM = selectedDate
-            };
-
-            string jsonData;
-
-            if (File.Exists(FilePath))
-            {
-
-                string existingData = File.ReadAllText(FilePath);
-
-                try
-                {
-
-                    var existingList = JsonConvert.DeserializeObject<List<object>>(existingData);
-
-
-                    existingList.Add(newData);
-
-
-                    jsonData = JsonConvert.SerializeObject(existingList, Newtonsoft.Json.Formatting.Indented);
-                }
-                catch (JsonSerializationException)
-                {
-                    try
-                    {
-
-                        var existingObject = JObject.Parse(existingData);
-
-
-                        var newList = new List<object> { existingObject.ToObject<object>(), newData };
-
-
-                        jsonData = JsonConvert.SerializeObject(newList, Newtonsoft.Json.Formatting.Indented);
-                    }
-                    catch (JsonReaderException)
-                    {
-
-                        jsonData = JsonConvert.SerializeObject(new List<object> { newData }, Newtonsoft.Json.Formatting.Indented);
-                    }
-                }
-            }
-            else
-            {
-                jsonData = JsonConvert.SerializeObject(new List<object> { newData }, Newtonsoft.Json.Formatting.Indented);
-            }
-
-
-            File.WriteAllText(FilePath, jsonData);
+            handler.UpdateTrip(selectedDate, kilometrit, matkaAika, osoiteTiedot, 0);
 
 
             MessageBox.Show("Data saved to JSON file.");
+        }
+
+        static float ParseFloat(string input)
+        {
+            input = input.Replace(',', '.');
+
+            if (float.TryParse(input, out float result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

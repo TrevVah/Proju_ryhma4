@@ -135,6 +135,8 @@ namespace KilsatMassiks
             if(givenPassword != null)
             {
                 TryAddUser(AddUser(first_name_field.Text, last_name_field.Text, email_field.Text, givenPassword));
+                MessageBox.Show($"Tunnukset luotu käyttäjälle {first_name_field.Text} {last_name_field.Text}.");
+                this.Close();
             }
             else
             {
