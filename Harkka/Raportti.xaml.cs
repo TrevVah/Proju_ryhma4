@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace KilsatMassiks
 {
@@ -30,22 +32,22 @@ namespace KilsatMassiks
         {
             InitializeComponent();
             tapahtuma = new ObservableCollection<ajoTapahtuma>();
-            mista1 = mista.SelectedDate ?? DateTime.Now;
-            mihin1 = mihin.SelectedDate ?? DateTime.Now;
         }
 
         private void AddRecordButton_Click(object sender, RoutedEventArgs e)
         {
+            mista1 = mista.SelectedDate ?? DateTime.Now;
+            mihin1 = mihin.SelectedDate ?? DateTime.Now;
             tapahtuma.Clear();
+            Trip trip = null;
             for (DateTime currentDate = mista1; currentDate <= mihin1; currentDate = currentDate.AddDays(1))
             {
-                Trip trip = handler.GetDailyTrip(currentDate);
+                trip = handler.GetDailyTrip(currentDate);
                 if (trip != null)
                 {
                     string name = handler.currentUser.first_name + handler.currentUser.last_name;
-
-                    //korvaus määrälle funktio joka laskee trp.km saadusta matkan pituudesta korvattavan määrän
                     tapahtuma.Add(new ajoTapahtuma { Date = currentDate, kmDriven = trip.km, korvausMaara = 20.00, henkilo = name });
+                    Debug.WriteLine("Added: " + new ajoTapahtuma{ Date = currentDate, kmDriven = trip.km, korvausMaara = 20.00, henkilo = name });
                 }
             }
             mileageDataGrid.ItemsSource = tapahtuma;

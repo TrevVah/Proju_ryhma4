@@ -121,14 +121,15 @@ namespace KilsatMassiks
             string jsonFilePath = Path.Combine(directoryPath, "trips.json");
             if (!File.Exists(jsonFilePath))
             {
+                Debug.WriteLine("File does not exist.");
                 return null;
             }
             else
             {
                 string[] tripsAsJSON = File.ReadAllLines(jsonFilePath);
-                Debug.WriteLine(tripsAsJSON[date.Day]);
                 Trip trip = JsonSerializer.Deserialize<Trip>(tripsAsJSON[date.Day].TrimEnd(','));
-                return trip;
+                if (trip.status == null) { return null; }
+                else { return trip; }
             }
         }
     }
