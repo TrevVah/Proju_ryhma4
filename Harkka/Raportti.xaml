@@ -7,7 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid x:Name="mileageDataGrid" AutoGenerateColumns="False" CanUserAddRows="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="mileageDataGrid" AutoGenerateColumns="False" CanUserAddRows="True" Margin="0,46,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*" />
                 <DataGridTextColumn Header="Kilometers Driven" Binding="{Binding kmDriven}" Width="*" />
@@ -27,6 +30,8 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <Button Content="lisaa" Click="AddRecordButton_Click" Margin="10,197,0,175" HorizontalAlignment="Left" Width="134" RenderTransformOrigin="0.525,0.532"/>
+        <Button Content="lisaa" Click="AddRecordButton_Click" Margin="666,16,0,404" HorizontalAlignment="Left" Width="82" RenderTransformOrigin="0.525,0.532"/>
+        <DatePicker x:Name="mista" HorizontalAlignment="Left" Margin="136,25,0,0" VerticalAlignment="Top" Height="21"/>
+        <DatePicker x:Name="mihin" HorizontalAlignment="Center" Margin="0,25,0,0" VerticalAlignment="Top" Height="21"/>
     </Grid>
 </UserControl>

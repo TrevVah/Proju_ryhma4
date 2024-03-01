@@ -24,22 +24,23 @@ namespace KilsatMassiks
         public ObservableCollection<ajoTapahtuma> tapahtuma { get; set; }
         //MainWindowissa luodun UserDataHandler classi, joka omistaa kirjautuneen käyttäjän currentUser muuttujassa.
         private UserDataHandler handler = MainWindow.Instance.GetHandler();
+        DateTime mista1 = DateTime.Now;
+        DateTime mihin1 = DateTime.Now;
         public Raportti()
         {
             InitializeComponent();
             tapahtuma = new ObservableCollection<ajoTapahtuma>();
+            mista1 = mista.SelectedDate ?? DateTime.Now;
+            mihin1 = mihin.SelectedDate ?? DateTime.Now;
+        }
 
-            // kusiset tapahtumat
-            tapahtuma.Add(new ajoTapahtuma { Date = DateTime.Today.AddDays(-1), kmDriven = 50, korvausMaara = 25.00, henkilo = "faijas perse" });
-            tapahtuma.Add(new ajoTapahtuma { Date = DateTime.Today.AddDays(-2), kmDriven = 40, korvausMaara = 20.00, henkilo = "Rock Ari" });
-
-
-            //KORVAA DateTime.Now/*startDate*/ .xaml datepicker ajansyötöllä
-            //KORVAA DateTime.Now/*endDate*/ .xaml datepicker ajansyötöllä
-            for (DateTime currentDate = DateTime.Now/*startDate*/; currentDate <= DateTime.Now/*edDate*/; currentDate = currentDate.AddDays(1))
+        private void AddRecordButton_Click(object sender, RoutedEventArgs e)
+        {
+            tapahtuma.Clear();
+            for (DateTime currentDate = mista1; currentDate <= mihin1; currentDate = currentDate.AddDays(1))
             {
                 Trip trip = handler.GetDailyTrip(currentDate);
-                if(trip != null) 
+                if (trip != null)
                 {
                     string name = handler.currentUser.first_name + handler.currentUser.last_name;
 
@@ -47,17 +48,7 @@ namespace KilsatMassiks
                     tapahtuma.Add(new ajoTapahtuma { Date = currentDate, kmDriven = trip.km, korvausMaara = 20.00, henkilo = name });
                 }
             }
-
-
             mileageDataGrid.ItemsSource = tapahtuma;
-        }
-
-        private int recordCount = 1; // lisays
-
-        private void AddRecordButton_Click(object sender, RoutedEventArgs e)
-        {
-            tapahtuma.Add(new ajoTapahtuma { henkilo = $"henkilo {recordCount}" }); //lisaanumerohenkilonjalkeen
-            recordCount++; // +1
         }
     }
 
