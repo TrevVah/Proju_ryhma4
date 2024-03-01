@@ -24,7 +24,7 @@ namespace KilsatMassiks
     /// </summary>
     public partial class calendar : UserControl
     {
-        private const string FilePath = "C:\\Users\\Trevor\\Desktop\\Laukku\\Proju_ryhma4-trevorin_oksa\\Proju_ryhma4-trevorin_oksa\\Harkka\\data.json";
+        private const string FilePath = "";
 
         private UserDataHandler handler = MainWindow.Instance.GetHandler();
 
@@ -70,7 +70,32 @@ namespace KilsatMassiks
                 return 0;
             }
         }
+
+        private void TextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text == "Type your input here...")
+            {
+                textBox.Text = string.Empty;
+                textBox.Foreground = Brushes.Black; // or any other color you want for the entered text
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = "";
+                textBox.Foreground = Brushes.Gray;
+            }
+        }
+
+
     }
+
+
+
 }
 
-//C:\\Users\\Trevor\\Desktop\\Laukku\\Proju_ryhma4-trevorin_oksa\\Proju_ryhma4-trevorin_oksa\\Harkka\\data.json
+
