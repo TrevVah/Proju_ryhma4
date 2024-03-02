@@ -5,11 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KilsatMassiks"
              mc:Ignorable="d" Height="451" Width="791">
-    <Grid>
+    <Grid Background="#EFEFEF">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="446*"/>
+            <ColumnDefinition Width="345*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="mileageDataGrid" AutoGenerateColumns="False" CanUserAddRows="True" Margin="10,59,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="#3F51B5" Margin="0,0,0,10" Grid.ColumnSpan="2">
+            <Label Content="Hae tapahtumat päivämäärien välillä" 
+                   HorizontalAlignment="Center" 
+                   FontSize="24" 
+                   Foreground="White" 
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <DatePicker x:Name="mista" Height="22" Width="150" Margin="5"/>
+                <TextBlock Text=" - " VerticalAlignment="Center" Foreground="White"/>
+                <DatePicker x:Name="mihin" Height="22" Width="150" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button x:Name="button" Content="Lisää" Click="AddRecordButton_Click" Width="100"/>
+                <Button Content="Print" Click="OnDataGridPrinting" Width="100"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="mileageDataGrid" 
+                  Grid.Row="1" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="True" 
+                  Margin="10,10,10,10"
+                  AlternatingRowBackground="#F0F0F0"
+                  BorderBrush="#D3D3D3"
+                  BorderThickness="1"
+                  RowHeaderWidth="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*" />
                 <DataGridTextColumn Header="Kilometers Driven" Binding="{Binding kmDriven}" Width="*" />
@@ -20,30 +54,13 @@
                 <Style TargetType="DataGridRow">
                     <Setter Property="ToolTip" Value="Double-click to edit" />
                     <Setter Property="IsEnabled" Value="False" />
-                    <Setter Property="Background" Value="#EEE" />
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#DDD" />
+                            <Setter Property="Background" Value="#E0E0E0" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <Button x:Name="button" Content="lisaa" Click="AddRecordButton_Click" Margin="683,0,0,425" HorizontalAlignment="Left" Width="{Binding ActualWidth.MaxValue, ElementName=button}" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Bottom" Height="31"/>
-        <DatePicker x:Name="mista" HorizontalAlignment="Left" Margin="136,10,0,0" VerticalAlignment="Top" Height="21"/>
-        <DatePicker x:Name="mihin" HorizontalAlignment="Left" Margin="548,9,0,0" VerticalAlignment="Top" Height="22"/>
-        <Button Content="Print" Click="OnDataGridPrinting" RenderTransformOrigin="0.525,0.532" Margin="10,0,699,420" Width="82"/>
-        <Label Content=" Hae päivämäärien välillä" HorizontalAlignment="Left" Margin="247,2,0,0" VerticalAlignment="Top" FontSize="24" Foreground="Black" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="44" Width="290" VerticalContentAlignment="Bottom" Cursor="No">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="0.09"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0.332"/>
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
-
-
     </Grid>
 </UserControl>

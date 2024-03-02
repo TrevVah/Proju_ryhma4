@@ -44,6 +44,7 @@
 
                 <TextBox
                     x:Name="KilometritTextBox"
+                    Text='KM'
                     Grid.Column="1"
                     Width="168"
                     Height="35"
@@ -56,6 +57,7 @@
 
                 <TextBox
                     x:Name="MatkaAikaTextBox"
+                    Text="AIKA"
                     Grid.Column="1"
                     Width="168"
                     Height="35"
@@ -68,6 +70,7 @@
 
                 <TextBox
                     x:Name="OsoiteTiedotTextBox"
+                    Text="MISTÄMIHIN"
                     Grid.Column="1"
                     Width="168"
                     Height="90"
