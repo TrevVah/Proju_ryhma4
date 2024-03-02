@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,10 +25,13 @@ namespace KilsatMassiks
     public partial class Raportti : UserControl
     {
         public ObservableCollection<ajoTapahtuma> tapahtuma { get; set; }
+
         //MainWindowissa luodun UserDataHandler classi, joka omistaa kirjautuneen käyttäjän currentUser muuttujassa.
         private UserDataHandler handler = MainWindow.Instance.GetHandler();
         DateTime mista1 = DateTime.Now;
         DateTime mihin1 = DateTime.Now;
+
+
         public Raportti()
         {
             InitializeComponent();
@@ -51,6 +55,22 @@ namespace KilsatMassiks
                 }
             }
             mileageDataGrid.ItemsSource = tapahtuma;
+        }
+        private void OnDataGridPrinting(object sender, RoutedEventArgs e)
+        {
+            string dateNow = DateTime.Now.ToString("d");
+            string Title = handler.currentUser.first_name + handler.currentUser.last_name + dateNow;
+
+
+            System.Windows.Controls.PrintDialog Printdlg = new System.Windows.Controls.PrintDialog();
+            if ((bool)Printdlg.ShowDialog().GetValueOrDefault())
+            {
+                Size pageSize = new Size(Printdlg.PrintableAreaWidth, Printdlg.PrintableAreaHeight);
+                // sizing of the element.
+                mileageDataGrid.Measure(pageSize);
+                mileageDataGrid.Arrange(new Rect(10, 10, pageSize.Width, pageSize.Height));
+                Printdlg.PrintVisual(mileageDataGrid, Title);
+            }
         }
     }
 
