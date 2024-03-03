@@ -10,7 +10,7 @@
 
         <!-- Buttons to add new tabs -->
         <StackPanel Orientation="Vertical" Grid.Row="1" Margin="5,10,0,10" HorizontalAlignment="Left" Width="95">
-            <Button Content="Tyhjä" Click="AddTab_Click" Height="30"/>
+            <Button Content="Profiili" Click="AddTab_Click" Height="30"/>
             <Button x:Name="TestiNappula" Content="Lisää matka" Click="OpenCalendarTab" Height="30"/>
             <Button x:Name="RaporttiNappula" Content="Luo raportti" Click="OpenReportTab" Height="30"/>
         </StackPanel>

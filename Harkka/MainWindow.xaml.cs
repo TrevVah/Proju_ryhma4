@@ -58,7 +58,7 @@ namespace KilsatMassiks
 
         private void AddTab_Click(object sender, RoutedEventArgs e)
         {
-            var newTab = CreateNewTabItem($"Tyhjä", new TabContent());
+            var newTab = CreateNewTabItem($"Profiili", new Profile());
             Tabs.Add(newTab);
             SelectedTab = newTab;
         }
