@@ -29,20 +29,24 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <Button x:Name="button" Content="lisaa" Click="AddRecordButton_Click" Margin="683,0,0,425" HorizontalAlignment="Left" Width="{Binding ActualWidth.MaxValue, ElementName=button}" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Bottom" Height="31"/>
-        <DatePicker x:Name="mista" HorizontalAlignment="Left" Margin="136,10,0,0" VerticalAlignment="Top" Height="21"/>
-        <DatePicker x:Name="mihin" HorizontalAlignment="Left" Margin="548,9,0,0" VerticalAlignment="Top" Height="22"/>
-        <Button Content="Print" Click="OnDataGridPrinting" RenderTransformOrigin="0.525,0.532" Margin="10,0,699,420" Width="82"/>
-        <Label Content=" Hae päivämäärien välillä" HorizontalAlignment="Left" Margin="247,2,0,0" VerticalAlignment="Top" FontSize="24" Foreground="Black" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="44" Width="290" VerticalContentAlignment="Bottom" Cursor="No">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="0.09"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0.332"/>
-                </TransformGroup>
-            </Label.RenderTransform>
-        </Label>
+        <Grid Margin="0,0,0,397" HorizontalAlignment="Center" Width="792">
+            <Button x:Name="button" Content="Hae" Click="AddRecordButton_Click" Margin="668,10,0,0" HorizontalAlignment="Left" Width="60" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="21"/>
+            <DatePicker x:Name="mista" HorizontalAlignment="Left" Margin="136,10,0,0" VerticalAlignment="Top" Height="26"/>
+            <DatePicker x:Name="mihin" HorizontalAlignment="Left" Margin="548,9,0,0" VerticalAlignment="Top" Height="27"/>
+            <Button Content="Tulosta" Click="OnDataGridPrinting" RenderTransformOrigin="0.525,0.532" Margin="52,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="58" Height="22"/>
+            <Label Content=" Hae päivämäärien välillä" HorizontalAlignment="Left" Margin="247,2,0,0" VerticalAlignment="Top" FontSize="24" Foreground="Black" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="44" Width="290" Cursor="No">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.09"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.332"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+        </Grid>
+
 
 
     </Grid>
