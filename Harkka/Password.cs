@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KilsatMassiks
 {
-    internal class Password
+    public class Password
     {
         public int userID { get; set; }
         public byte[] password { get; set; }

@@ -101,13 +101,52 @@ namespace KilsatMassiks
                 {
                     if (user.getID() == _user.getID())
                     {
-                        users[user.getID()+1] = _user;
+                        users[user.getID()-1] = _user;
                         jsonString = JsonSerializer.Serialize(users);
                         jsonString = jsonString.Replace("},{", "},\n{");
                         jsonString = jsonString.Replace("[", "[\n");
-                        jsonString = jsonString.Replace(",]", "\n]");
+                        jsonString = jsonString.Replace("]", "\n]");
                         File.WriteAllText(jsonFilePath, jsonString);
                         Debug.WriteLine("User updated.");
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool UpdatePassword(User _user, Password _pass)
+        {
+            Debug.WriteLine("Finding user database...");
+            string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Users.json");
+            Debug.WriteLine("Finding password database...");
+            string jsonPasswordFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Passwords.json");
+
+            if (!File.Exists(jsonPasswordFilePath))
+            {
+                File.Create(jsonPasswordFilePath).Close();
+                string jsonInitContent = "[\n]";
+                File.WriteAllText(jsonFilePath, jsonInitContent);
+                Debug.WriteLine("Passwords.json was not found and was created.");
+            }
+
+            Debug.WriteLine("Updating an user's password...");
+            {
+                string jsonString = File.ReadAllText(jsonFilePath);
+                string jsonPassString = File.ReadAllText(jsonPasswordFilePath);
+                List<User> users = JsonSerializer.Deserialize<List<User>>(jsonString);
+                List<Password> passwords = JsonSerializer.Deserialize<List<Password>>(jsonPassString);
+                foreach (User user in users)
+                {
+                    if (user.getID() == _user.getID())
+                    {
+                        passwords[user.getID() - 1] = _pass;
+                        jsonPassString = JsonSerializer.Serialize(passwords);
+                        jsonPassString = jsonPassString.Replace("},{", "},\n{");
+                        jsonPassString = jsonPassString.Replace("[", "[\n");
+                        jsonPassString = jsonPassString.Replace("]", "\n]");
+                        File.WriteAllText(jsonPasswordFilePath, jsonPassString);
+                        Debug.WriteLine("User's password was updated.");
                         return true;
                     }
                 }
