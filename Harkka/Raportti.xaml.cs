@@ -42,6 +42,8 @@ namespace KilsatMassiks
         {
             mista1 = mista.SelectedDate ?? DateTime.Now;
             mihin1 = mihin.SelectedDate ?? DateTime.Now;
+            int randomNumber = new Random().Next(100, 1000);
+
             tapahtuma.Clear();
             Trip trip = null;
             for (DateTime currentDate = mista1; currentDate <= mihin1; currentDate = currentDate.AddDays(1))
@@ -50,7 +52,7 @@ namespace KilsatMassiks
                 if (trip != null)
                 {
                     string name = handler.currentUser.first_name + handler.currentUser.last_name;
-                    tapahtuma.Add(new ajoTapahtuma { Date = currentDate, kmDriven = trip.km, korvausMaara = 20.00, henkilo = name });
+                    tapahtuma.Add(new ajoTapahtuma { Date = currentDate, kmDriven = trip.km, korvausMaara = randomNumber, henkilo = name });
                     Debug.WriteLine("Added: " + new ajoTapahtuma{ Date = currentDate, kmDriven = trip.km, korvausMaara = 20.00, henkilo = name });
                 }
             }
@@ -58,8 +60,7 @@ namespace KilsatMassiks
         }
         private void OnDataGridPrinting(object sender, RoutedEventArgs e)
         {
-            string dateNow = DateTime.Now.ToString("d");
-            string Title = handler.currentUser.first_name + handler.currentUser.last_name + dateNow;
+            string Title = handler.currentUser.first_name + handler.currentUser.last_name + handler.currentUser.userID;
 
 
             System.Windows.Controls.PrintDialog Printdlg = new System.Windows.Controls.PrintDialog();
