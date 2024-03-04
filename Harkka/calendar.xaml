@@ -72,7 +72,7 @@
                     LostFocus="TextBox_LostFocus"
                     PreviewMouseDown="TextBox_PreviewMouseDown"
                     Tag="Matka aika"
-                    Text="Syötä matkan aika minuuteissa" />
+                    Text="Syötä matkan aika tunneissa" />
 
                 <TextBox
                     x:Name="OsoiteTiedotTextBox"
