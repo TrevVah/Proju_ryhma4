@@ -7,22 +7,36 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800"
         Closing="CloseUp">
+    <Window.Resources>
+        <!-- Primary color -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FF007ACC"/>
+        <!-- Secondary color -->
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF4C4C4C"/>
+        <!-- Accent color -->
+        <SolidColorBrush x:Key="AccentColor" Color="#FFE5E5E5"/>
+        <!-- Button style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="41"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid RenderTransformOrigin="0.49,0.496">
-        <Button Content="Luo käyttäjä" HorizontalAlignment="Left" Margin="400,227,0,0" VerticalAlignment="Top" Click="Button_Click" Height="41" Width="96"/>
-        <Button Content="Kirjaudu sisään" HorizontalAlignment="Left" Margin="293,227,0,0" VerticalAlignment="Top" Click="LoginButton" Height="41" Width="90"/>
-        <TextBox Name="email_field"  HorizontalAlignment="Left" Margin="293,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" TextChanged="TextBox_TextChanged"/>
-        <TextBlock HorizontalAlignment="Left" Margin="293,116,0,0" TextWrapping="Wrap" Text="Sähköposti" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="100">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="0.312"/>
-                    <RotateTransform Angle="-0.163"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
+        <Button Content="Luo käyttäjä" HorizontalAlignment="Left" Margin="400,227,0,0" VerticalAlignment="Top" Click="Button_Click" Width="96"/>
+        <Button Content="Kirjaudu sisään" HorizontalAlignment="Left" Margin="293,227,0,0" VerticalAlignment="Top" Click="LoginButton" Width="90"/>
+        <TextBox Name="email_field" HorizontalAlignment="Left" Margin="293,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" TextChanged="TextBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="293,116,0,0" TextWrapping="Wrap" Text="Sähköposti" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="100"/>
         <TextBlock HorizontalAlignment="Left" Margin="293,160,0,0" TextWrapping="Wrap" Text="Salasana" VerticalAlignment="Top" Width="84"/>
         <PasswordBox Name="password_field" HorizontalAlignment="Left" Margin="293,181,0,0" VerticalAlignment="Top" Width="205"/>
-
     </Grid>
 </Window>

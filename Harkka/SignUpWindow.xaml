@@ -7,6 +7,47 @@
         mc:Ignorable="d"
         Title="SignUpWindow" Height="450" Width="800"
         Closing="CloseUp">
+    <Window.Resources>
+        <!-- Define the same styles as used previously -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FF007ACC"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF4C4C4C"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#FFE5E5E5"/>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="30"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="206,80,0,0" TextWrapping="Wrap" Text="Etunimi" VerticalAlignment="Top" Width="109"/>
         <TextBox x:Name="first_name_field" HorizontalAlignment="Left" Margin="206,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" TextChanged="TextBox_TextChanged"/>
@@ -15,10 +56,9 @@
         <TextBlock HorizontalAlignment="Left" Margin="206,176,0,0" TextWrapping="Wrap" Text="Sähköposti" VerticalAlignment="Top" Width="109"/>
         <TextBox x:Name="email_field" HorizontalAlignment="Left" Margin="206,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" TextChanged="TextBox_TextChanged"/>
         <TextBlock HorizontalAlignment="Left" Margin="206,224,0,0" TextWrapping="Wrap" Text="Salasana" VerticalAlignment="Top" Width="109"/>
-        <Button Content="Luo käyttäjä" HorizontalAlignment="Left" Margin="206,353,0,0" VerticalAlignment="Top" Height="30" Width="109" Click="SignUp_Click"/>
+        <Button Content="Luo käyttäjä" HorizontalAlignment="Left" Margin="206,353,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="206,272,0,0" TextWrapping="Wrap" Text="Salasana uudelleen" VerticalAlignment="Top" Width="109"/>
         <PasswordBox x:Name="password_field1" HorizontalAlignment="Left" Margin="206,245,0,0" VerticalAlignment="Top" Width="287"/>
         <PasswordBox x:Name="password_field2" HorizontalAlignment="Left" Margin="206,293,0,0" VerticalAlignment="Top" Width="287"/>
-
     </Grid>
 </Window>
