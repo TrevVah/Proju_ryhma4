@@ -67,12 +67,15 @@ namespace KilsatMassiks
                 switch (txtBox.Name)
                 {
                     case "FirstName_Input":
+                        if (txtBox.Text == "") goto emptyInput;
                         tempUser.first_name = txtBox.Text;
                         break;
                     case "LastName_Input":
+                        if (txtBox.Text == "") goto emptyInput;
                         tempUser.last_name = txtBox.Text;
                         break;
                     case "Email_Input":
+                        if (txtBox.Text == "") goto emptyInput;
                         tempUser.email = txtBox.Text;
                         break;
 
@@ -102,12 +105,57 @@ namespace KilsatMassiks
                         break;
                 }
             }
-
-            if(OpenProfilePromptWindow(plainPSW, handler.currentUser.getID()))
+            if (passwordBoxes.Count > 0)
+            {   if (plainPSW == "") goto emptyInput;
+                if (OpenProfilePromptWindow(plainPSW, handler.currentUser.getID()))
+                {
+                    handler.UpdateUser(tempUser);
+                    if (tempPassword != null) { handler.UpdatePassword(tempUser, tempPassword); }
+                    UpdateInformation();
+                }
+            }
+            else
             {
-                handler.UpdateUser(tempUser);
-                if(tempPassword != null || passwordBoxes.Count < 1) {handler.UpdatePassword(tempUser, tempPassword); }
-                UpdateInformation();
+                if (OpenProfilePrompt2Window(handler.currentUser.getID()))
+                {
+                    handler.UpdateUser(tempUser);
+                    UpdateInformation();
+                }
+            }
+
+        emptyInput:
+            MessageBox.Show("Syöttölaatikot evät saa olla tyhjiä. \n" +
+                            "Joko paina 'Peru', jotta syöttölaatikko katoaa tai syötä halumasi muutos.");
+        }
+
+        private bool OpenProfilePrompt2Window(int userID)
+        {
+            ProfilePrompt2 profilePrompt = new ProfilePrompt2();
+
+            bool? result = profilePrompt.ShowDialog();
+
+            if (result == true)
+            {
+                string oldPassword = ConvertToPlainText(profilePrompt.topMarginTextBox.SecurePassword);
+                string jsonPasswordFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Passwords.json");
+                string jsonPasswordsString = File.ReadAllText(jsonPasswordFilePath);
+                List<Password> passwords = JsonSerializer.Deserialize<List<Password>>(jsonPasswordsString);
+                byte[] storedPassword = passwords[userID - 1].password;
+                byte[] givenHashedPassword = Hasher.ComputeHash(oldPassword, passwords[userID - 1].salt);
+
+                if (!StructuralComparisons.StructuralEqualityComparer.Equals(storedPassword, givenHashedPassword))
+                {
+                    Debug.WriteLine("Authentication failed.");
+                    MessageBox.Show("Vanha salasana ei vastaa tietokantaan tallenettua salasanaa.", "Message", MessageBoxButton.OK);
+                    return false;
+                }
+                MessageBox.Show("Uudet tiedot on tallennettu tietokantaan.", "Message", MessageBoxButton.OK);
+                Debug.WriteLine("Authentication successful.");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -123,7 +171,7 @@ namespace KilsatMassiks
                 string oldPassword = ConvertToPlainText(profilePrompt.topMarginTextBox.SecurePassword);
                 if (newPassword != _password) 
                 {
-                    Debug.WriteLine("New password doesn't match the given in form.");
+                    Debug.WriteLine("Uuden salasanan uudelleen kirjoitus ei täsmännyt haluttuun salasanaan.");
                     MessageBox.Show("New password doesn't match the given in form.", "Message" ,MessageBoxButton.OK);
                     return false; 
                 }
@@ -138,10 +186,10 @@ namespace KilsatMassiks
                 if (!StructuralComparisons.StructuralEqualityComparer.Equals(storedPassword, givenHashedPassword))
                 {
                     Debug.WriteLine("Authentication failed.");
-                    MessageBox.Show("Given old password does not match one in database.", "Message", MessageBoxButton.OK);
+                    MessageBox.Show("Vanha salasana ei vastaa tietokantaan tallenettua salasanaa.", "Message", MessageBoxButton.OK);
                     return false;
                 }
-                MessageBox.Show("New information have been changed to current user's information.", "Message", MessageBoxButton.OK);
+                MessageBox.Show("Uudet tiedot on tallennettu tietokantaan.", "Message", MessageBoxButton.OK);
                 Debug.WriteLine("Authentication successful.");
                 return true;
             }
@@ -242,7 +290,7 @@ namespace KilsatMassiks
             if (textBoxName == "LastName_Input") { newTextBox.Text = sukunimi.Text; }
             if (textBoxName == "Email_Input") { newTextBox.Text = sahkoposti.Text; }
 
-            newTextBox.Margin = new Thickness(0, 0, 25, 0);
+            newTextBox.Margin = new Thickness(0, 0, 30, 0);
             newTextBox.MinWidth = 50;
             newTextBox.VerticalAlignment = VerticalAlignment.Center;
 

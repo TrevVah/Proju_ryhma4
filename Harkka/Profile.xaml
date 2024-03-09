@@ -47,18 +47,18 @@
                 <TextBlock Name="sahkoposti" Grid.Row="2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="#" VerticalAlignment="Center"/>
                 <TextBlock Name="salasana" Grid.Row="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="#" VerticalAlignment="Center"/>
             </Grid>
-            <Grid Name="TheGrid" Grid.Column="2" Margin="10,0,0,-104" HorizontalAlignment="Left" Width="72">
+            <Grid Name="TheGrid" Grid.Column="2" Margin="10,10,10,10" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
 
-                <Button Name="FirstName_Button" Content="Vaihda" HorizontalAlignment="Left" VerticalAlignment="Center" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangeFirstName_Click"/>
-                <Button Name="LastName_Button" Grid.Row="1" Content="Vaihda" HorizontalAlignment="Left" VerticalAlignment="Center" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangeLastName_Click"/>
-                <Button Name="Email_Button" Grid.Row="2" Content="Vaihda" HorizontalAlignment="Left" VerticalAlignment="Center" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangeEmail_Click"/>
-                <Button Name="Password_Button" Grid.Row="3" Content="Vaihda" HorizontalAlignment="Left" VerticalAlignment="Center" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangePassword_Click"/>
+                <Button Name="FirstName_Button" Content="Vaihda" HorizontalAlignment="Left" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangeFirstName_Click"/>
+                <Button Name="LastName_Button" Grid.Row="1" Content="Vaihda" HorizontalAlignment="Left" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangeLastName_Click"/>
+                <Button Name="Email_Button" Grid.Row="2" Content="Vaihda" HorizontalAlignment="Left" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangeEmail_Click"/>
+                <Button Name="Password_Button" Grid.Row="3" Content="Vaihda" HorizontalAlignment="Left" Template="{StaticResource InvisibleButtonTemplate}" Foreground="Blue" Click="ChangePassword_Click"/>
             </Grid>
         </Grid>
         <Grid Margin="0,10,0,0" Grid.Row="1">
