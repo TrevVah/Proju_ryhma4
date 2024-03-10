@@ -35,6 +35,7 @@ namespace KilsatMassiks
 
         private void SyotaButtonClick(object sender, RoutedEventArgs e)
         {
+            handler.StartTimer();
             int kilometrit = 0;
             float matkaAika = 0;
             string osoiteTiedot = OsoiteTiedotTextBox.Text;
@@ -53,7 +54,7 @@ namespace KilsatMassiks
 
             handler.UpdateTrip(selectedDate, kilometrit, matkaAika, osoiteTiedot, 0);
 
-
+            handler.StopTimer();
             MessageBox.Show("Data saved to JSON file.");
         }
 

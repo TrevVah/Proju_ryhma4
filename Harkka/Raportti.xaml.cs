@@ -40,6 +40,7 @@ namespace KilsatMassiks
 
         private void AddRecordButton_Click(object sender, RoutedEventArgs e)
         {
+            handler.StartTimer();
             mista1 = mista.SelectedDate ?? DateTime.Now;
             mihin1 = mihin.SelectedDate ?? DateTime.Now;
             int randomNumber = new Random().Next(100, 1000);
@@ -57,6 +58,7 @@ namespace KilsatMassiks
                 }
             }
             mileageDataGrid.ItemsSource = tapahtuma;
+            handler.StopTimer();
         }
         private void OnDataGridPrinting(object sender, RoutedEventArgs e)
         {

@@ -6,18 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Timers;
+
 
 namespace KilsatMassiks
 {
     public class UserDataHandler
     {
         public User currentUser {  get; set; }
-
+        System.Timers.Timer timer = new System.Timers.Timer();
+        private DateTime startTime;
 
         public UserDataHandler(User currentUser) 
         {  
-            this.currentUser = currentUser; 
+            this.currentUser = currentUser;
+            timer.Interval = 1000;
+            timer.Elapsed += TimerElapsed;
         }
+
+
 
         public void UpdateTrip(DateTime date, int km, float duration, string info, int status) 
         {
@@ -170,6 +177,24 @@ namespace KilsatMassiks
                 if (trip.status == null) { return null; }
                 else { return trip; }
             }
+        }
+
+        static void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            Debug.WriteLine("Timer elapsed at: " + e.SignalTime);
+        }
+
+        public void StartTimer()
+        {
+            startTime = DateTime.Now;
+            timer.Start();
+        }
+
+        public void StopTimer() 
+        {
+            timer.Stop();
+            TimeSpan elapsedTime = DateTime.Now - startTime;
+            Debug.WriteLine("Elapsed time: " + elapsedTime.TotalMilliseconds + " milliseconds");
         }
     }
 }

@@ -52,7 +52,7 @@ namespace KilsatMassiks
             salasana.Text = "********";
         }
 
-        private void SaveChanges_Click(object sender, RoutedEventArgs e)
+        private bool SaveChanges_Click(object sender, RoutedEventArgs e)
         {
             textBoxes.Clear();
             passwordBoxes.Clear();
@@ -109,23 +109,28 @@ namespace KilsatMassiks
             {   if (plainPSW == "") goto emptyInput;
                 if (OpenProfilePromptWindow(plainPSW, handler.currentUser.getID()))
                 {
+                    handler.StartTimer();
                     handler.UpdateUser(tempUser);
                     if (tempPassword != null) { handler.UpdatePassword(tempUser, tempPassword); }
                     UpdateInformation();
+                    handler.StopTimer();
                 }
             }
             else
             {
                 if (OpenProfilePrompt2Window(handler.currentUser.getID()))
                 {
+                    handler.StartTimer();
                     handler.UpdateUser(tempUser);
                     UpdateInformation();
+                    handler.StopTimer();
                 }
             }
-
-        emptyInput:
+            return true;
+            emptyInput:
             MessageBox.Show("Syöttölaatikot evät saa olla tyhjiä. \n" +
                             "Joko paina 'Peru', jotta syöttölaatikko katoaa tai syötä halumasi muutos.");
+            return false;
         }
 
         private bool OpenProfilePrompt2Window(int userID)
