@@ -58,7 +58,7 @@ namespace KilsatMassiks
 
         private void AddTab_Click(object sender, RoutedEventArgs e)
         {
-            var newTab = CreateNewTabItem($"Tab {Tabs.Count + 1}", new TabContent());
+            var newTab = CreateNewTabItem($"Profiili", new Profile());
             Tabs.Add(newTab);
             SelectedTab = newTab;
         }
@@ -73,15 +73,11 @@ namespace KilsatMassiks
             }
         }
 
-        private void DoSomething(object sender, RoutedEventArgs e)
+        private void OpenCalendarTab(object sender, RoutedEventArgs e)
         {
-            if (users.Count > 0)
-            {
-                users[0].UpdateTrip(DateTime.Now, 100, 0);
-            }
-            else
-            {
-            }
+            var newTab = CreateNewTabItem($"Matkan lisäys", new calendar());
+            Tabs.Add(newTab);
+            SelectedTab = newTab;
 
         }
 
@@ -93,7 +89,7 @@ namespace KilsatMassiks
 
         private void OpenReportTab(object sender, RoutedEventArgs e)
         {
-            var newTab = CreateNewTabItem($"Tab {Tabs.Count + 1}", new Raportti());
+            var newTab = CreateNewTabItem($"Raportin luonti", new Raportti());
             Tabs.Add(newTab);
             SelectedTab = newTab;
         }

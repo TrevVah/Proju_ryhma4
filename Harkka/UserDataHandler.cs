@@ -6,20 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Timers;
+
 
 namespace KilsatMassiks
 {
     public class UserDataHandler
     {
         public User currentUser {  get; set; }
-
+        System.Timers.Timer timer = new System.Timers.Timer();
+        private DateTime startTime;
 
         public UserDataHandler(User currentUser) 
         {  
-            this.currentUser = currentUser; 
+            this.currentUser = currentUser;
+            timer.Interval = 1000;
+            timer.Elapsed += TimerElapsed;
         }
 
-        public void UpdateTrip(DateTime date, int km, int status) 
+
+
+        public void UpdateTrip(DateTime date, int km, float duration, string info, int status) 
         {
             Debug.WriteLine("Updating a trip...");
 
@@ -54,18 +61,28 @@ namespace KilsatMassiks
 
                     Debug.WriteLine("JSON file initialized.");
                 }
-            //A trip update
+            //A trip update to database
             Debug.WriteLine("Updating a trip to: " + jsonFilePath);
                 {
-                    string[] tripsAsJSON = File.ReadAllLines(jsonFilePath);
-                    Debug.WriteLine(tripsAsJSON[date.Day]);
-                    Trip trip = JsonSerializer.Deserialize<Trip>(tripsAsJSON[date.Day].TrimEnd(','));
-                    trip.date_time = date;
-                    trip.km = km;
-                    trip.status = status;
-                    string updatedTripJSON = JsonSerializer.Serialize(trip);
-                    tripsAsJSON[date.Day] = updatedTripJSON + ",";
-                    File.WriteAllLines(jsonFilePath, tripsAsJSON);
+                    //JSON containing Month's trips for each day into List
+                    List<Trip> monthTrips = new List<Trip>();
+                    string jsonContent = File.ReadAllText(jsonFilePath);
+                    monthTrips = JsonSerializer.Deserialize<List<Trip>>(jsonContent);
+                    //Update content
+                    monthTrips[date.Day - 1].date_time = date;
+                    monthTrips[date.Day - 1].km = km;
+                    monthTrips[date.Day - 1].status = status;
+                    monthTrips[date.Day - 1].info = info;
+                    monthTrips[date.Day - 1].duration = duration;
+                    //Updated List serialized back to JSON file
+                    string jsonString = JsonSerializer.Serialize(monthTrips);
+                    jsonString = jsonString.Replace("},{", "},\n{");
+                    jsonString = jsonString.Replace("[", "[\n");
+                    jsonString = jsonString.Replace("]", "\n]");
+
+                    File.WriteAllText(jsonFilePath, jsonString);
+
+                    Debug.WriteLine("JSON file updated.");
                 }
 
         }
@@ -91,7 +108,7 @@ namespace KilsatMassiks
                 {
                     if (user.getID() == _user.getID())
                     {
-                        users[user.getID()+1] = _user;
+                        users[user.getID()-1] = _user;
                         jsonString = JsonSerializer.Serialize(users);
                         jsonString = jsonString.Replace("},{", "},\n{");
                         jsonString = jsonString.Replace("[", "[\n");
@@ -105,21 +122,79 @@ namespace KilsatMassiks
             return false;
         }
 
+        public bool UpdatePassword(User _user, Password _pass)
+        {
+            Debug.WriteLine("Finding user database...");
+            string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Users.json");
+            Debug.WriteLine("Finding password database...");
+            string jsonPasswordFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Passwords.json");
+
+            if (!File.Exists(jsonPasswordFilePath))
+            {
+                File.Create(jsonPasswordFilePath).Close();
+                string jsonInitContent = "[\n]";
+                File.WriteAllText(jsonFilePath, jsonInitContent);
+                Debug.WriteLine("Passwords.json was not found and was created.");
+            }
+
+            Debug.WriteLine("Updating an user's password...");
+            {
+                string jsonString = File.ReadAllText(jsonFilePath);
+                string jsonPassString = File.ReadAllText(jsonPasswordFilePath);
+                List<User> users = JsonSerializer.Deserialize<List<User>>(jsonString);
+                List<Password> passwords = JsonSerializer.Deserialize<List<Password>>(jsonPassString);
+                foreach (User user in users)
+                {
+                    if (user.getID() == _user.getID())
+                    {
+                        passwords[user.getID() - 1] = _pass;
+                        jsonPassString = JsonSerializer.Serialize(passwords);
+                        jsonPassString = jsonPassString.Replace("},{", "},\n{");
+                        jsonPassString = jsonPassString.Replace("[", "[\n");
+                        jsonPassString = jsonPassString.Replace("]", "\n]");
+                        File.WriteAllText(jsonPasswordFilePath, jsonPassString);
+                        Debug.WriteLine("User's password was updated.");
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public Trip? GetDailyTrip(DateTime date)
         {
             string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Trips\\" + currentUser.getID().ToString() + "\\" + date.ToString("yyyy\\\\MM"));
             string jsonFilePath = Path.Combine(directoryPath, "trips.json");
             if (!File.Exists(jsonFilePath))
             {
+                Debug.WriteLine("File does not exist.");
                 return null;
             }
             else
             {
                 string[] tripsAsJSON = File.ReadAllLines(jsonFilePath);
-                Debug.WriteLine(tripsAsJSON[date.Day]);
                 Trip trip = JsonSerializer.Deserialize<Trip>(tripsAsJSON[date.Day].TrimEnd(','));
-                return trip;
+                if (trip.status == null) { return null; }
+                else { return trip; }
             }
+        }
+
+        static void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            Debug.WriteLine("Timer elapsed at: " + e.SignalTime);
+        }
+
+        public void StartTimer()
+        {
+            startTime = DateTime.Now;
+            timer.Start();
+        }
+
+        public void StopTimer() 
+        {
+            timer.Stop();
+            TimeSpan elapsedTime = DateTime.Now - startTime;
+            Debug.WriteLine("Elapsed time: " + elapsedTime.TotalMilliseconds + " milliseconds");
         }
     }
 }

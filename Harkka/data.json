@@ -1,0 +1,20 @@
+[
+  {
+    "Kilometrit": "12",
+    "MatkaAika": "52",
+    "OsoiteTiedot": "Vantaa-Helsinki",
+    "PVM": "2024-02-22T00:00:00"
+  },
+  {
+    "Kilometrit": "52",
+    "MatkaAika": "25",
+    "OsoiteTiedot": "he-va",
+    "PVM": "2024-02-15T00:00:00"
+  },
+  {
+    "Kilometrit": "63",
+    "MatkaAika": "2546",
+    "OsoiteTiedot": "va-he",
+    "PVM": "2024-02-15T00:00:00"
+  }
+]
